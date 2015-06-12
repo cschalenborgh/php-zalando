@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright 2015 Chris Schalenborgh <chris@schalenborgh.be>
  *
@@ -17,7 +18,56 @@
 
 namespace ZalandoPHP;
 
+use ZalandoPHP\Configuration\ConfigurationInterface;
+use ZalandoPHP\Operations\OperationInterface;
+use ZalandoPHP\Request\RequestFactory;
+//use ZalandoPHP\ResponseTransformer\ResponseTransformerFactory;
+
 class ZalandoPHP
 {
-    const VERSION = "1.0.0-DEV";
+    const VERSION = '1.0.0-DEV';
+    const DEBUG   = false;
+
+    /**
+     * Configuration
+     *
+     * @var ConfigurationInterface
+     */
+    protected $configuration;
+
+    /**
+     * @param ConfigurationInterface $configuration
+     */
+    public function __construct(ConfigurationInterface $configuration = null)
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * Runs the given operation
+     *
+     * @param OperationInterface     $operation     The operationobject
+     * @param ConfigurationInterface $configuration The configurationobject
+     *
+     * @return mixed
+     */
+    public function runOperation(OperationInterface $operation)
+    {
+        $configuration = @is_null($configuration) ? $this->configuration : $configuration;
+
+        if (true === is_null($configuration)) {
+            throw new \Exception('No configuration passed.');
+        }
+
+        $requestObject = RequestFactory::createRequest($configuration);
+
+        $response = $requestObject->perform($operation);
+
+        if($this->configuration->getResponseType() == 'object') {
+            return json_decode($response);
+        }
+        else {
+            return json_decode($response, true);
+        }
+    }
 }

@@ -1,5 +1,7 @@
 # Zalando PHP API Wrapper
 
+[![Build Status](https://travis-ci.org/cschalenborgh/php-zalando.svg)](https://travis-ci.org/cschalenborgh/php-zalando)
+
 ## Installation
 
 ### Composer
