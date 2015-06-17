@@ -30,10 +30,6 @@ class Categories extends AbstractOperation
     const TARGET_GROUP_MEN    = 'men';
     const TARGET_GROUP_KIDS   = 'kids';
 
-//    protected $endpoints      = [
-//        'categories',
-//        'categories/{key}'
-//    ];
     protected $endpoint       = 'categories/{key}';
 
     public function __construct($category = '')
@@ -42,11 +38,11 @@ class Categories extends AbstractOperation
     }
 
     /**
-     * {@inheritdoc}
+     * Get the endpoint name
      */
     public function getName()
     {
-        return 'Categories';
+        return (new \ReflectionClass($this))->getShortName();
     }
 
     /*
@@ -54,15 +50,7 @@ class Categories extends AbstractOperation
      */
     public function getEndpoint()
     {
-//        return 'categories';
         return $this->endpoint;
-    }
-
-    public function setType($type)
-    {
-        $this->filter['type'] = $type;
-
-        return $this;
     }
 
     public function setTargetGroup($targetGroup)
@@ -86,4 +74,5 @@ class Categories extends AbstractOperation
 
         return $this;
     }
+
 }

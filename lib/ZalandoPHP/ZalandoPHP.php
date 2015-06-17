@@ -21,12 +21,11 @@ namespace ZalandoPHP;
 use ZalandoPHP\Configuration\ConfigurationInterface;
 use ZalandoPHP\Operations\OperationInterface;
 use ZalandoPHP\Request\RequestFactory;
-//use ZalandoPHP\ResponseTransformer\ResponseTransformerFactory;
 
 class ZalandoPHP
 {
     const VERSION = '1.0.0-DEV';
-    const DEBUG   = false;
+    const DEBUG   = true;
 
     /**
      * Configuration
@@ -46,8 +45,8 @@ class ZalandoPHP
     /**
      * Runs the given operation
      *
-     * @param OperationInterface     $operation     The operationobject
-     * @param ConfigurationInterface $configuration The configurationobject
+     * @param OperationInterface     $operation     The operation object
+     * @param ConfigurationInterface $configuration The configuration object
      *
      * @return mixed
      */

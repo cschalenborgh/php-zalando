@@ -44,10 +44,10 @@ abstract class AbstractOperation implements OperationInterface
     /**
      * {@inheritdoc}
      */
-    public function setParameter($key, $value)
-    {
-        $this->parameter[$key] = $value;
-    }
+//    public function setParameter($key, $value)
+//    {
+//        $this->parameter[$key] = $value;
+//    }
 
     /**
      * Magic setter and getter functions

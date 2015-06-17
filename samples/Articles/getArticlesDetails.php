@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-// php -d display_errors samples/Categories/getCategories.php
+// php -d display_errors samples/Articles/getArticles.php
 
 
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'tests'.DIRECTORY_SEPARATOR.'bootstrap.php');
@@ -24,7 +24,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'
 
 use ZalandoPHP\ZalandoPHP;
 use ZalandoPHP\Configuration\GenericConfiguration;
-use ZalandoPHP\Operations\Categories;
+use ZalandoPHP\Operations\Articles;
 
 $conf = new GenericConfiguration();
 
@@ -40,14 +40,9 @@ try {
 $zalandoPHP = new ZalandoPHP($conf);
 
 
-$categories = new Categories('catalog');
-$categories->setTargetGroup('all');
-//$categories->setName('heel');
-$categories->setOutlet(false);
-//$categories->setType('default');
+$articles = new Articles('IC143F01H-M11');
 
-
-$formattedResponse = $zalandoPHP->runOperation($categories);
+$formattedResponse = $zalandoPHP->runOperation($articles);
 
 echo '<pre>';
 print_r($formattedResponse);

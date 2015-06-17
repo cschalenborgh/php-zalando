@@ -26,7 +26,6 @@ use ZalandoPHP\Request\Util;
 /**
  * Basic implementation of the rest request
  *
- * @see    http://docs.aws.amazon.com/AWSECommerceService/2011-08-01/DG/AnatomyOfaRESTRequest.html
  * @author Jan Eichhorn <exeu65@googlemail.com>
  */
 class Request implements RequestInterface
@@ -71,7 +70,7 @@ class Request implements RequestInterface
      *
      * @var string
      */
-    protected $requestScheme = "http://api.zalando.com/";
+    protected $requestScheme = "https://api.zalando.com/";
 
     /**
      * @var ConfigurationInterface
@@ -133,21 +132,14 @@ class Request implements RequestInterface
         $ch = curl_init();
 
         if (false === $ch) {
-            throw new \RuntimeException("Cannot initialize curl resource");
+            throw new \RuntimeException('Cannot initialize curl resource');
         }
 
-        //$preparedRequestParams = $this->prepareRequestFilters($operation);
-        //$queryString = $this->buildQueryString($preparedRequestParams);
         $headers = $this->buildHeaders();
 
         $options = $this->options;
         $options[CURLOPT_HTTPHEADER] = $headers;
-        $options[CURLOPT_URL] = $this->requestScheme . $operation->getEndpoint(). '?' .http_build_query($operation->getOperationFilter());
-
-
-//        print_r($operation->getOperationFilter());
-        echo $this->requestScheme . $operation->getEndpoint(). '?' .http_build_query($operation->getOperationFilter());
-//        exit;
+        $options[CURLOPT_URL] = $this->requestScheme . $operation->getEndpoint(). '?' .$this->buildQueryString($operation->getOperationFilter());
 
         // show curl debug?
         if(ZalandoPHP::DEBUG) {
@@ -170,6 +162,8 @@ class Request implements RequestInterface
         $errorNumber = null;
         $errorMessage = null;
 
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        $info = curl_getinfo($ch);
         $result = curl_exec($ch);
 
         if (false === $result) {
@@ -190,37 +184,23 @@ class Request implements RequestInterface
             );
         }
 
+        // debug!
+//        echo '<pre>';
+//        print_r($headers);
+//        echo '</pre>';
+//        echo '<pre>';
+//        print_r($options);
+//        echo '</pre>';
+//        echo '<pre>';
+//        print_r($info);
+//        echo '</pre>';
+//        echo '<pre>';
+//        print_r($result);
+//        echo '</pre>';
+//        exit;
+
         return $result;
     }
-
-    /**
-     * Prepares the parameters for the request
-     *
-     * @param OperationInterface $operation
-     *
-     * @return array
-     */
-//    protected function prepareRequestFilters(OperationInterface $operation)
-//    {
-//        $baseRequestParams = array(
-////            'Operation'         => $operation->getName(),
-////            'Version'           => '2011-08-01',
-////            'Timestamp'         => Util::getTimeStamp()
-//        );
-//
-//        $operationParams = $operation->getOperationFilter();
-//
-//        foreach ($operationParams as $key => $value) {
-//            if (true === is_array($value)) {
-//                $operationParams[$key] = implode(',', $value);
-//            }
-//        }
-//
-//        $fullParameterList = array_merge($baseRequestParams, $operationParams);
-//        ksort($fullParameterList);
-//
-//        return $fullParameterList;
-//    }
 
     /**
      * Builds the http headers
@@ -232,9 +212,16 @@ class Request implements RequestInterface
     protected function buildHeaders()
     {
         $headers = [];
-        $headers['x-client-name']       = $this->configuration->getClientName();
-        $headers['Accept-Language']     = $this->configuration->getLocale();
         $headers['Signature']           = 'ZalandoPHP';
+        $headers['Accept-Encoding']     = 'gzip';
+
+        // only set when input is geven
+        if(!Empty($this->configuration->getClientName())) {
+            $headers['x-client-name']       = $this->configuration->getClientName();
+        }
+        if(!Empty($this->configuration->getLocale()))  {
+            $headers['Accept-Language']     = $this->configuration->getLocale();
+        }
 
         return $headers;
     }
@@ -246,36 +233,26 @@ class Request implements RequestInterface
      *
      * @return string
      */
-//    protected function buildQueryString(array $params)
-//    {
-//        $parameterList = array();
-//        foreach ($params as $key => $value) {
-//            $parameterList[] = sprintf('%s=%s', $key, rawurlencode($value));
-//        }
-//
-//        //$parameterList[] = 'Signature=' . rawurlencode($this->buildSignature($parameterList));
-//
-//        return implode("&", $parameterList);
-//    }
+    protected function buildQueryString(array $params)
+    {
+        $parameterList = [];
+        foreach ($params as $key => $value) {
+            if(is_bool($value)) {
 
-    /**
-     * Calculates the signature for the request
-     *
-     * @param array $params
-     *
-     * @return string
-     */
-//    protected function buildSignature(array $params)
-//    {
-//        $template = "GET\nwebservices.amazon.%s\n/onca/xml\n%s";
-//
-//        return Util::buildSignature(
-//            sprintf(
-//                $template,
-//                $this->configuration->getLocale(),
-//                implode('&', $params)
-//            ),
-//            $this->configuration->getSecretKey()
-//        );
-//    }
+                // replace boolean with 'string' value
+                if($value === true) {
+                    $value = 'true';
+                }
+                if($value === false) {
+                    $value = 'false';
+                }
+            }
+
+            $parameterList[] = sprintf('%s=%s', $key, rawurlencode($value));
+        }
+
+        //$parameterList[] = 'Signature=' . rawurlencode($this->buildSignature($parameterList));
+
+        return implode("&", $parameterList);
+    }
 }
