@@ -33,17 +33,4 @@ class Util
     {
         return gmdate("Y-m-d\TH:i:s\Z");
     }
-
-    /**
-     * Provides the signature
-     *
-     * @param string $stringToSign The string to be signed
-     * @param string $secretKey    The paapi secret key
-     *
-     * @return string
-     */
-//    public static function buildSignature($stringToSign, $secretKey)
-//    {
-//        return base64_encode(hash_hmac("sha256", $stringToSign, $secretKey, true));
-//    }
 }

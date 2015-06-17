@@ -124,26 +124,94 @@ class Request implements RequestInterface
         $this->configuration = $configuration;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * {@inheritdoc}
      */
     public function perform(OperationInterface $operation)
     {
+
+        // prep headers & query string
+        $headers        = $this->buildHeaders();
+        $queryString    = $this->buildQueryString($operation->getOperationFilter());
+
+        $requestUrl = $this->requestScheme . $operation->getEndpoint() . (!Empty($queryString) ? '?' .$queryString : '');
+//        $requestUrl = 'http://zalando.dev:80/Samples/debug_headers.php';
+
+        $params = [
+            'headers'   => $headers,
+            'debug'     => ZalandoPHP::DEBUG,
+        ];
+
+        // init Guzzle client
+        $guzzle = new \GuzzleHttp\Client();
+
+        if (!is_object($guzzle)) {
+            throw new \RuntimeException('Cannot initialize Guzzle');
+        }
+
+        // send request via Guzzle
+        $response = $guzzle->get($requestUrl, $params);
+
+        if ($response->getStatusCode() != 200) {
+            throw new \RuntimeException(
+                sprintf(
+                    "An error occurred while sending request. Status code: %d; Body: %s",
+                    $response->getStatusCode(),
+                    $response->getBody()
+                )
+            );
+        }
+
+        return $response->getBody();
+    }
+
+
+
+    /**
+     * DEPRECATED
+     * {@inheritdoc}
+     */
+    public function performCurl(OperationInterface $operation)
+    {
+
         $ch = curl_init();
 
         if (false === $ch) {
             throw new \RuntimeException('Cannot initialize curl resource');
         }
 
-        $headers = $this->buildHeaders();
+        $headers        = $this->buildHeaders();
+        $queryString    = $this->buildQueryString($operation->getOperationFilter());
 
-        $options = $this->options;
-        $options[CURLOPT_HTTPHEADER] = $headers;
-        $options[CURLOPT_URL] = $this->requestScheme . $operation->getEndpoint(). '?' .$this->buildQueryString($operation->getOperationFilter());
+        $options                        = $this->options;
+        $options[CURLOPT_HEADER]        = true;
+        $options[CURLINFO_HEADER_OUT]   = true;
+        $options[CURLOPT_HTTPHEADER]    = $headers;
+        $options[CURLOPT_URL]           = $this->requestScheme . $operation->getEndpoint() . (!Empty($queryString) ? '?' .$queryString : '');
+        $options[CURLOPT_URL]           = 'http://zalando.dev:80/Samples/debug_headers.php';
 
         // show curl debug?
         if(ZalandoPHP::DEBUG) {
-            $options[CURLOPT_VERBOSE] = true;
+            $options[CURLOPT_VERBOSE]   = true;
         }
 
         foreach ($options as $currentOption => $currentOptionValue) {
@@ -185,19 +253,20 @@ class Request implements RequestInterface
         }
 
         // debug!
-//        echo '<pre>';
-//        print_r($headers);
-//        echo '</pre>';
+        var_dump($options[CURLOPT_URL]);
+        echo '<pre>';
+        print_r($headers);
+        echo '</pre>';
 //        echo '<pre>';
 //        print_r($options);
 //        echo '</pre>';
-//        echo '<pre>';
-//        print_r($info);
-//        echo '</pre>';
-//        echo '<pre>';
-//        print_r($result);
-//        echo '</pre>';
-//        exit;
+        echo '<pre>';
+        print_r($info);
+        echo '</pre>';
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        exit;
 
         return $result;
     }
@@ -212,15 +281,16 @@ class Request implements RequestInterface
     protected function buildHeaders()
     {
         $headers = [];
-        $headers['Signature']           = 'ZalandoPHP';
-        $headers['Accept-Encoding']     = 'gzip';
+        $headers["Signature"]           = "ZalandoPHP";
+        $headers["Accept-Encoding"]     = "gzip";
+        $headers["test"]                = "blaat";
 
         // only set when input is geven
         if(!Empty($this->configuration->getClientName())) {
-            $headers['x-client-name']       = $this->configuration->getClientName();
+            $headers["x-client-name"]       = $this->configuration->getClientName();
         }
         if(!Empty($this->configuration->getLocale()))  {
-            $headers['Accept-Language']     = $this->configuration->getLocale();
+            $headers["Accept-Language"]     = $this->configuration->getLocale();
         }
 
         return $headers;

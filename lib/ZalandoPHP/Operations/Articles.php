@@ -26,11 +26,11 @@ namespace ZalandoPHP\Operations;
 class Articles extends AbstractOperation
 {
 
-    protected $endpoint       = 'articles/{key}';
+    protected $endpoint       = 'articles/{articleId}';
 
     public function __construct($articleId = '')
     {
-        $this->endpoint = str_replace('{key}', $articleId, $this->endpoint);
+        $this->endpoint = str_replace('{articleId}', $articleId, $this->endpoint);
     }
 
     /**

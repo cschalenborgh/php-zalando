@@ -25,7 +25,7 @@ use ZalandoPHP\Request\RequestFactory;
 class ZalandoPHP
 {
     const VERSION = '1.0.0-DEV';
-    const DEBUG   = true;
+    const DEBUG   = false;
 
     /**
      * Configuration

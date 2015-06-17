@@ -18,19 +18,20 @@
 namespace ZalandoPHP\Operations;
 
 /**
- * ArticlesMedia
+ * ArticlesUnits
  *
- * @see    https://github.com/zalando/shop-api-documentation/wiki/Articles#media
+ * @see    https://github.com/zalando/shop-api-documentation/wiki/Articles#units
  * @author Chris Schalenborgh <chris@schalenborgh.be>
  */
-class ArticlesMedia extends AbstractOperation
+class ArticlesUnits extends AbstractOperation
 {
 
-    protected $endpoint       = 'articles/{articleId}/media';
+    protected $endpoint       = 'articles/{articleId}/units/{unitId}';
 
-    public function __construct($articleId = '')
+    public function __construct($articleId = '', $unitId = '')
     {
         $this->endpoint = str_replace('{articleId}', $articleId, $this->endpoint);
+        $this->endpoint = str_replace('{unitId}', $unitId, $this->endpoint);
     }
 
     /**

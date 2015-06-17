@@ -18,15 +18,16 @@
 namespace ZalandoPHP\Operations;
 
 /**
- * ArticlesMedia
+ * ArticlesReviews
  *
- * @see    https://github.com/zalando/shop-api-documentation/wiki/Articles#media
+ * @see    https://github.com/zalando/shop-api-documentation/wiki/Article-reviews
  * @author Chris Schalenborgh <chris@schalenborgh.be>
  */
-class ArticlesMedia extends AbstractOperation
+class ArticlesReviews extends AbstractOperation
 {
 
-    protected $endpoint       = 'articles/{articleId}/media';
+//    protected $endpoint       = 'articles/{articleId}/reviews';
+    protected $endpoint         = 'article-reviews?articleId={articleId}';
 
     public function __construct($articleId = '')
     {

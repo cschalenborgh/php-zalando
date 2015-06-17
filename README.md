@@ -34,3 +34,16 @@ https://github.com/zalando/shop-api-documentation
 
 ## API Demo:
 http://zalando.github.io/shop-api-demo/
+
+## Supported API methods:
+
+- https://api.zalando.com/categories
+- https://api.zalando.com/categories/{key}
+- https://api.zalando.com/articles
+- https://api.zalando.com/articles/{articleId}
+- https://api.zalando.com/articles/{articleId}/media
+- https://api.zalando.com/articles/{articleId}/units
+- https://api.zalando.com/articles/{articleId}/units/{unitId}
+- https://api.zalando.com/articles/{articleId}/reviews
+
+Currently not all API methods are supported (yet). Feel free to contribute.

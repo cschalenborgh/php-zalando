@@ -19,19 +19,9 @@ namespace ZalandoPHP\Operations;
 
 abstract class AbstractOperation implements OperationInterface
 {
-    // used for method parameters
-//    protected $parameter = array();
 
     // used in query string
     protected $filter = array();
-
-    /**
-     * {@inheritdoc}
-     */
-//    public function getOperationParameter()
-//    {
-//        return $this->parameter;
-//    }
 
     /**
      * {@inheritdoc}
@@ -40,14 +30,6 @@ abstract class AbstractOperation implements OperationInterface
     {
         return $this->filter;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-//    public function setParameter($key, $value)
-//    {
-//        $this->parameter[$key] = $value;
-//    }
 
     /**
      * Magic setter and getter functions
