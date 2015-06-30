@@ -58,4 +58,4 @@ http://zalando.github.io/shop-api-demo/
 - https://api.zalando.com/filters/{name}
 - https://api.zalando.com/recommendations/{articleIds}
 
-At this very moment, only a part of the API is covered. Feel free to contribute.
+Feel free to contribute.
