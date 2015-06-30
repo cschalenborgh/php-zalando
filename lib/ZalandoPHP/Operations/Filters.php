@@ -18,20 +18,19 @@
 namespace ZalandoPHP\Operations;
 
 /**
- * ArticlesUnits
+ * Filters
  *
- * @see    https://github.com/zalando/shop-api-documentation/wiki/Articles#units
+ * @see    https://github.com/zalando/shop-api-documentation/wiki/Filter
  * @author Chris Schalenborgh <chris@schalenborgh.be>
  */
-class ArticlesUnits extends AbstractOperation
+class Filters extends AbstractOperation
 {
 
-    protected $endpoint       = 'articles/{articleId}/units/{unitId}';
+    protected $endpoint       = 'filters/{name}';
 
-    public function __construct($articleId = '', $unitId = '')
+    public function __construct($name = '')
     {
-        $this->endpoint = str_replace('{articleId}', $articleId, $this->endpoint);
-        $this->endpoint = str_replace('{unitId}', $unitId, $this->endpoint);
+        $this->endpoint = str_replace('{name}', $name, $this->endpoint);
     }
 
 }

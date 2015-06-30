@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2015 Chris Schalenborgh <chris@schalenborgh.be>
+ * Copyright 2013 Jan Eichhorn <exeu65@googlemail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,28 +15,26 @@
  * limitations under the License.
  */
 
-namespace ZalandoPHP\Operations;
+namespace ZalandoPHP\Test\Operations\Types;
 
-interface OperationInterface
+use ZalandoPHP\Operations\Articles;
+
+class AbstractOperationTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Gets the name of the operation
-     *
-     * @return string
-     */
-//    public function getName();
+    public function testAbstractOperationSetterAndGetter()
+    {
+        $articles = new Articles();
+        $articles->setFoo('ABC');
+
+        $this->assertEquals('ABC', $articles->getFoo());
+    }
 
     /**
-     * Gets the endpoint of the operation
-     *
-     * @return string
+     * @expectedException BadFunctionCallException
      */
-//    public function getEndpoint();
-
-    /**
-     * Returns all filters belonging to the current operation
-     *
-     * @return array
-     */
-    public function getOperationFilter();
+    public function testAbstractOperationInvalidMethodName()
+    {
+        $articles = new Articles();
+        $articles->foo();
+    }
 }

@@ -18,20 +18,21 @@
 namespace ZalandoPHP\Operations;
 
 /**
- * ArticlesReviews
+ * Reviews
  *
  * @see    https://github.com/zalando/shop-api-documentation/wiki/Article-reviews
  * @author Chris Schalenborgh <chris@schalenborgh.be>
  */
-class ArticlesReviews extends AbstractOperation
+class Reviews extends AbstractOperation
 {
 
-    protected $endpoint         = 'article-reviews?articleId={articleId}';
+    protected $endpoint         = 'article-reviews/{reviewId}';
 
-    public function __construct($articleId = '')
+    public function __construct($reviewId = '')
     {
-        $this->endpoint = str_replace('{articleId}', $articleId, $this->endpoint);
+        $this->endpoint = str_replace('{reviewId}', $reviewId, $this->endpoint);
     }
+
 
 
     /**
@@ -40,7 +41,7 @@ class ArticlesReviews extends AbstractOperation
      *
      * @param integer $page
      *
-     * @return \ZalandoPHP\Operations\ArticlesReviews
+     * @return \ZalandoPHP\Operations\Reviews
      */
     public function setPage($page)
     {
@@ -63,7 +64,7 @@ class ArticlesReviews extends AbstractOperation
      *
      * @param integer $pageSize
      *
-     * @return \ZalandoPHP\Operations\ArticlesReviews
+     * @return \ZalandoPHP\Operations\Reviews
      */
     public function setPageSize($pageSize)
     {

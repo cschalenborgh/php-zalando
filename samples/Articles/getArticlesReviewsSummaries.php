@@ -22,13 +22,14 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'
 
 use ZalandoPHP\ZalandoPHP;
 use ZalandoPHP\Configuration\GenericConfiguration;
-use ZalandoPHP\Operations\Articles;
+use ZalandoPHP\Operations\ArticlesReviewsSummaries;
 
 $conf = new GenericConfiguration();
 
 try {
     $conf
-        ->setLocale('nl-NL')
+//        ->setLocale('nl-be')
+        ->setLocale('de-DE')
         ->setClientName('zalando-php-wrapper')
         ->setResponseType('array');
 
@@ -38,8 +39,8 @@ try {
 $zalandoPHP = new ZalandoPHP($conf);
 
 
-$articles = new Articles('IC143F01H-M11');
-$formattedResponse = $zalandoPHP->runOperation($articles);
+$reviews = new ArticlesReviewsSummaries('L8381D00F-G11');
+$formattedResponse = $zalandoPHP->runOperation($reviews);
 
 echo '<pre>';
 print_r($formattedResponse);

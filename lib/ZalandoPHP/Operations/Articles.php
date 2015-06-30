@@ -25,6 +25,11 @@ namespace ZalandoPHP\Operations;
  */
 class Articles extends AbstractOperation
 {
+    const SORT_POPULARITY       = 'popularity';
+    const SORT_ACTIVATION_DATE  = 'activationDate';
+    const SORT_PRICE_DESC       = 'priceDesc';
+    const SORT_PRICE_ASC        = 'priceAsc';
+    const SORT_SALE             = 'sale';
 
     protected $endpoint       = 'articles/{articleId}';
 
@@ -34,19 +39,102 @@ class Articles extends AbstractOperation
     }
 
     /**
-     * Get the endpoint name
+     * Sets the resultpage to a specified value
+     * Allows to browse resultsets which have more than one page
+     *
+     * @param integer $page
+     *
+     * @return \ZalandoPHP\Operations\Articles
      */
-    public function getName()
+    public function setPage($page)
     {
-        return (new \ReflectionClass($this))->getShortName();
+        if (false === is_numeric($page) || $page < 1) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s is an invalid page value. It has to be numeric and positive',
+                    $page
+                )
+            );
+        }
+
+        $this->filter['page'] = $page;
+
+        return $this;
     }
 
-    /*
-     * Get the endpoint path, relative to the domain
+    /**
+     * Sets the size of te resultset to a specified value
+     *
+     * @param integer $pageSize
+     *
+     * @return \ZalandoPHP\Operations\Articles
      */
-    public function getEndpoint()
+    public function setPageSize($pageSize)
     {
-        return $this->endpoint;
+        if (false === is_numeric($pageSize) || $pageSize < 1 || $pageSize > 200) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s is an invalid page value. It has to be numeric, positive and between than 1 and 200',
+                    $pageSize
+                )
+            );
+        }
+
+        $this->filter['pageSize'] = $pageSize;
+
+        return $this;
+    }
+
+    /**
+     * Sort the results based on a predefined parameter
+     * @see https://github.com/zalando/shop-api-documentation/wiki/Articles#sorting-articles
+     *
+     * @param string $sort
+     *
+     * @return \ZalandoPHP\Operations\Articles
+     */
+    public function setSort($sort)
+    {
+        $validSortingMethods = array(
+            self::SORT_POPULARITY,
+            self::SORT_ACTIVATION_DATE,
+            self::SORT_PRICE_ASC,
+            self::SORT_PRICE_DESC,
+            self::SORT_SALE
+        );
+
+        if (!in_array($sort, $validSortingMethods)) {
+            throw new \InvalidArgumentException(sprintf(
+                "Invalid sorting method '%s' passed. Valid types are: '%s'",
+                $sort,
+                implode(', ', $validSortingMethods)
+            ));
+        }
+
+        $this->filter['sort'] = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Allow fulltext search for articles
+     * @see https://github.com/zalando/shop-api-documentation/wiki/Articles#fulltext-search-for-articles
+     *
+     * @param string $search
+     *
+     * @return \ZalandoPHP\Operations\Articles
+     */
+    public function setFullText($search)
+    {
+
+        if(!Empty($search)) {
+
+            $this->filter['fullText'] = $search;
+
+        }
+
+        return $this;
+
     }
 
 }

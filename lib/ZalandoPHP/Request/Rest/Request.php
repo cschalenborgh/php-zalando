@@ -156,9 +156,13 @@ class Request implements RequestInterface
         $requestUrl = $this->requestScheme . $operation->getEndpoint() . (!Empty($queryString) ? '?' .$queryString : '');
 //        $requestUrl = 'http://zalando.dev:80/Samples/debug_headers.php';
 
+//        die($requestUrl);
+
         $params = [
-            'headers'   => $headers,
-            'debug'     => ZalandoPHP::DEBUG,
+            'headers'       => $headers,
+            'debug'         => ZalandoPHP::DEBUG,
+            //'exceptions'    => true
+            'exceptions'    => false
         ];
 
         // init Guzzle client
@@ -171,12 +175,21 @@ class Request implements RequestInterface
         // send request via Guzzle
         $response = $guzzle->get($requestUrl, $params);
 
+//        echo '<pre>';
+//        print_r($response->getBody());
+//        echo '</pre>';
+//        exit;
+
+
         if ($response->getStatusCode() != 200) {
+            $body = json_decode($response->getBody());
+
             throw new \RuntimeException(
                 sprintf(
-                    "An error occurred while sending request. Status code: %d; Body: %s",
-                    $response->getStatusCode(),
-                    $response->getBody()
+                    "An error occurred while sending request. Status code: %d; Message: %s; Errors: %s",
+                    $body->status,
+                    $body->message,
+                    @json_encode($body->errors)
                 )
             );
         }
@@ -207,7 +220,7 @@ class Request implements RequestInterface
         $options[CURLINFO_HEADER_OUT]   = true;
         $options[CURLOPT_HTTPHEADER]    = $headers;
         $options[CURLOPT_URL]           = $this->requestScheme . $operation->getEndpoint() . (!Empty($queryString) ? '?' .$queryString : '');
-        $options[CURLOPT_URL]           = 'http://zalando.dev:80/Samples/debug_headers.php';
+        //$options[CURLOPT_URL]           = 'http://zalando.dev:80/Samples/debug_headers.php';
 
         // show curl debug?
         if(ZalandoPHP::DEBUG) {
@@ -253,20 +266,20 @@ class Request implements RequestInterface
         }
 
         // debug!
-        var_dump($options[CURLOPT_URL]);
-        echo '<pre>';
-        print_r($headers);
-        echo '</pre>';
+//        var_dump($options[CURLOPT_URL]);
 //        echo '<pre>';
-//        print_r($options);
+//        print_r($headers);
 //        echo '</pre>';
-        echo '<pre>';
-        print_r($info);
-        echo '</pre>';
-        echo '<pre>';
-        print_r($result);
-        echo '</pre>';
-        exit;
+////        echo '<pre>';
+////        print_r($options);
+////        echo '</pre>';
+//        echo '<pre>';
+//        print_r($info);
+//        echo '</pre>';
+//        echo '<pre>';
+//        print_r($result);
+//        echo '</pre>';
+//        exit;
 
         return $result;
     }
@@ -283,7 +296,7 @@ class Request implements RequestInterface
         $headers = [];
         $headers["Signature"]           = "ZalandoPHP";
         $headers["Accept-Encoding"]     = "gzip";
-        $headers["test"]                = "blaat";
+//        $headers["test"]                = "blaat";
 
         // only set when input is geven
         if(!Empty($this->configuration->getClientName())) {

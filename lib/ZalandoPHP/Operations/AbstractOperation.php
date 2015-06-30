@@ -32,6 +32,22 @@ abstract class AbstractOperation implements OperationInterface
     }
 
     /**
+     * Get the endpoint name
+     */
+    public function getName()
+    {
+        return (new \ReflectionClass($this))->getShortName();
+    }
+
+    /*
+     * Get the endpoint path, relative to the domain
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    /**
      * Magic setter and getter functions
      *
      * @param string $methodName Methodname

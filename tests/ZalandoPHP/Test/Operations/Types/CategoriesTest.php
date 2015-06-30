@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2015 Chris Schalenborgh <chris@schalenborgh.be>
+ * Copyright 2013 Jan Eichhorn <exeu65@googlemail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,17 @@
  * limitations under the License.
  */
 
-namespace ZalandoPHP\Operations;
+namespace ZalandoPHP\Test\Operations\Types;
 
-/**
- * ArticlesMedia
- *
- * @see    https://github.com/zalando/shop-api-documentation/wiki/Articles#media
- * @author Chris Schalenborgh <chris@schalenborgh.be>
- */
-class ArticlesMedia extends AbstractOperation
+use ZalandoPHP\Operations\Categories;
+
+class SearchTest extends \PHPUnit_Framework_TestCase
 {
-
-    protected $endpoint       = 'articles/{articleId}/media';
-
-    public function __construct($articleId = '')
+    public function testSearchValidPage()
     {
-        $this->endpoint = str_replace('{articleId}', $articleId, $this->endpoint);
-    }
+        $categories = new Categories();
+        $categories->setPage(1);
 
+        $this->assertEquals(1, $categories->getPage());
+    }
 }

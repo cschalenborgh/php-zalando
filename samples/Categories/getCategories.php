@@ -16,8 +16,6 @@
 * limitations under the License.
 */
 
-// php -d display_errors samples/Categories/getCategories.php
-
 
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'tests'.DIRECTORY_SEPARATOR.'bootstrap.php');
 
@@ -40,7 +38,7 @@ try {
 $zalandoPHP = new ZalandoPHP($conf);
 
 
-$categories = new Categories('catalog');
+$categories = new Categories('fitness-kinderen');
 $categories->setTargetGroup('all');
 //$categories->setName('heel');
 $categories->setOutlet(false);

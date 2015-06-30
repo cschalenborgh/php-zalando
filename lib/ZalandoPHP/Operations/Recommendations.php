@@ -18,20 +18,19 @@
 namespace ZalandoPHP\Operations;
 
 /**
- * ArticlesUnits
+ * Recommendations
  *
- * @see    https://github.com/zalando/shop-api-documentation/wiki/Articles#units
+ * @see    https://github.com/zalando/shop-api-documentation/wiki/Recommendations
  * @author Chris Schalenborgh <chris@schalenborgh.be>
  */
-class ArticlesUnits extends AbstractOperation
+class Recommendations extends AbstractOperation
 {
 
-    protected $endpoint       = 'articles/{articleId}/units/{unitId}';
+    protected $endpoint       = 'recommendations/{articleIds}';
 
-    public function __construct($articleId = '', $unitId = '')
+    public function __construct($articleIds = '')
     {
-        $this->endpoint = str_replace('{articleId}', $articleId, $this->endpoint);
-        $this->endpoint = str_replace('{unitId}', $unitId, $this->endpoint);
+        $this->endpoint = str_replace('{articleIds}', $articleIds, $this->endpoint);
     }
 
 }

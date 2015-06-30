@@ -22,7 +22,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'
 
 use ZalandoPHP\ZalandoPHP;
 use ZalandoPHP\Configuration\GenericConfiguration;
-use ZalandoPHP\Operations\Articles;
+use ZalandoPHP\Operations\Recommendations;
 
 $conf = new GenericConfiguration();
 
@@ -38,8 +38,10 @@ try {
 $zalandoPHP = new ZalandoPHP($conf);
 
 
-$articles = new Articles('IC143F01H-M11');
-$formattedResponse = $zalandoPHP->runOperation($articles);
+$articleIds = 'JA222O0KY-C12,D1843F008-M11';
+$recommendations = new Recommendations($articleIds);
+
+$formattedResponse = $zalandoPHP->runOperation($recommendations);
 
 echo '<pre>';
 print_r($formattedResponse);

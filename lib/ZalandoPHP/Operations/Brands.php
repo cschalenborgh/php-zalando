@@ -18,19 +18,19 @@
 namespace ZalandoPHP\Operations;
 
 /**
- * ArticlesReviews
+ * Brands
  *
- * @see    https://github.com/zalando/shop-api-documentation/wiki/Article-reviews
+ * @see    https://github.com/zalando/shop-api-documentation/wiki/Brands
  * @author Chris Schalenborgh <chris@schalenborgh.be>
  */
-class ArticlesReviews extends AbstractOperation
+class Brands extends AbstractOperation
 {
 
-    protected $endpoint         = 'article-reviews?articleId={articleId}';
+    protected $endpoint       = 'brands/{key}';
 
-    public function __construct($articleId = '')
+    public function __construct($key = '')
     {
-        $this->endpoint = str_replace('{articleId}', $articleId, $this->endpoint);
+        $this->endpoint = str_replace('{key}', $key, $this->endpoint);
     }
 
 
@@ -40,14 +40,14 @@ class ArticlesReviews extends AbstractOperation
      *
      * @param integer $page
      *
-     * @return \ZalandoPHP\Operations\ArticlesReviews
+     * @return \ZalandoPHP\Operations\Brands
      */
     public function setPage($page)
     {
         if (false === is_numeric($page) || $page < 1) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    '%s is an invalid page value. It has to be numeric and positive',
+                    '%s is an invalid page value. It has to be numeric, positive and bigger than 1',
                     $page
                 )
             );
@@ -63,7 +63,7 @@ class ArticlesReviews extends AbstractOperation
      *
      * @param integer $pageSize
      *
-     * @return \ZalandoPHP\Operations\ArticlesReviews
+     * @return \ZalandoPHP\Operations\Brands
      */
     public function setPageSize($pageSize)
     {

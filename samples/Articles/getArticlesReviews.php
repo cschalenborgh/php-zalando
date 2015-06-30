@@ -16,8 +16,6 @@
 * limitations under the License.
 */
 
-// php -d display_errors samples/Articles/getArticles.php
-
 
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'tests'.DIRECTORY_SEPARATOR.'bootstrap.php');
 
@@ -39,7 +37,6 @@ try {
     echo $e->getMessage();
 }
 $zalandoPHP = new ZalandoPHP($conf);
-
 
 $reviews = new ArticlesReviews('L8381D00F-G11');
 $formattedResponse = $zalandoPHP->runOperation($reviews);

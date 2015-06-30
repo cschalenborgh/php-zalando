@@ -32,27 +32,18 @@ class Categories extends AbstractOperation
 
     protected $endpoint       = 'categories/{key}';
 
-    public function __construct($category = '')
+    public function __construct($key = '')
     {
-        $this->endpoint = str_replace('{key}', $category, $this->endpoint);
-    }
-
-    /**
-     * Get the endpoint name
-     */
-    public function getName()
-    {
-        return (new \ReflectionClass($this))->getShortName();
+        $this->endpoint = str_replace('{key}', $key, $this->endpoint);
     }
 
     /*
-     * Get the endpoint path, relative to the domain
+     * Specify the target group. Check if valid first
+     *
+     * @param string $targetGroup
+     *
+     * @return \ZalandoPHP\Operations\Categories
      */
-    public function getEndpoint()
-    {
-        return $this->endpoint;
-    }
-
     public function setTargetGroup($targetGroup)
     {
         $validTargetGroups = array(
@@ -75,4 +66,51 @@ class Categories extends AbstractOperation
         return $this;
     }
 
+
+    /**
+     * Sets the resultpage to a specified value
+     * Allows to browse resultsets which have more than one page
+     *
+     * @param integer $page
+     *
+     * @return \ZalandoPHP\Operations\Categories
+     */
+    public function setPage($page)
+    {
+        if (false === is_numeric($page) || $page < 1) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s is an invalid page value. It has to be numeric, positive and bigger than 1',
+                    $page
+                )
+            );
+        }
+
+        $this->filter['page'] = $page;
+
+        return $this;
+    }
+
+    /**
+     * Sets the size of te resultset to a specified value
+     *
+     * @param integer $pageSize
+     *
+     * @return \ZalandoPHP\Operations\Categories
+     */
+    public function setPageSize($pageSize)
+    {
+        if (false === is_numeric($pageSize) || $pageSize < 1 || $pageSize > 200) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s is an invalid page value. It has to be numeric, positive and between than 1 and 200',
+                    $pageSize
+                )
+            );
+        }
+
+        $this->filter['pageSize'] = $pageSize;
+
+        return $this;
+    }
 }
