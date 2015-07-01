@@ -1,9 +1,9 @@
 # Zalando PHP API Wrapper
 
 [![Build Status](https://travis-ci.org/cschalenborgh/php-zalando.svg)](https://travis-ci.org/cschalenborgh/php-zalando)
+[![Coverage Status](https://coveralls.io/repos/cschalenborgh/php-zalando/badge.svg)](https://coveralls.io/r/cschalenborgh/php-zalando)
 [![Total Downloads](https://poser.pugx.org/cschalenborgh/php-zalando/d/total.svg)](https://packagist.org/packages/cschalenborgh/php-zalando)
 [![License](https://poser.pugx.org/cschalenborgh/php-zalando/license.svg)](https://packagist.org/packages/cschalenborgh/php-zalando)
-[![Coverage Status](https://coveralls.io/repos/cschalenborgh/php-zalando/badge.svg)](https://coveralls.io/r/cschalenborgh/php-zalando)
 
 ## Installation
 
