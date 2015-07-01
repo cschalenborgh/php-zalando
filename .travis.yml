@@ -5,6 +5,8 @@ php:
   - 5.6
   - 7.0
 
+sudo: false
+
 notifications:
   email:
     - chris@schalenborgh.be
