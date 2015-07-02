@@ -40,10 +40,10 @@ http://zalando.github.io/shop-api-demo/
 
 ## Supported API methods:
 
-- https://api.zalando.com/articles-reviews
-- https://api.zalando.com/articles-reviews/{reviewId}
-- https://api.zalando.com/articles-reviews-summaries
-- https://api.zalando.com/articles-reviews-summaries/{articleModelId}
+- https://api.zalando.com/article-reviews
+- https://api.zalando.com/article-reviews/{reviewId}
+- https://api.zalando.com/article-reviews-summaries
+- https://api.zalando.com/article-reviews-summaries/{articleModelId}
 - https://api.zalando.com/articles
 - https://api.zalando.com/articles/{articleId}
 - https://api.zalando.com/articles/{articleId}/media
