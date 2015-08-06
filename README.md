@@ -25,7 +25,7 @@ Now tell composer to download the library by running the command:
 $ php composer.phar install
 ```
 
-Composer will generate the autoloader file automaticly. So you only have to include this.
+Composer will generate the autoloader file automatically. So you only have to include this.
 Typically its located in the vendor dir and its called autoload.php
 
 ## Basic Usage:
@@ -33,7 +33,7 @@ This library is using the PSR-0 standard: https://github.com/php-fig/fig-standar
 So you can use any autoloader which fits into this standard.
 
 ## API Docs:
-https://github.com/zalando/shop-api-documentation
+https://github.com/zalando/shop-api-documentation/wiki/
 
 ## API Demo:
 http://zalando.github.io/shop-api-demo/
