@@ -186,8 +186,9 @@ class Request implements RequestInterface
 
             throw new \RuntimeException(
                 sprintf(
-                    "An error occurred while sending request. Status code: %d; Message: %s; Errors: %s",
+                    "An error occurred while sending request. Status code: %d; Url: %s; Message: %s; Errors: %s",
                     $body->status,
+                    $requestUrl,
                     $body->message,
                     @json_encode($body->errors)
                 )
