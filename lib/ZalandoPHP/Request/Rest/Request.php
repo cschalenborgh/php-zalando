@@ -175,25 +175,20 @@ class Request implements RequestInterface
         // send request via Guzzle
         $response = $guzzle->get($requestUrl, $params);
 
-//        echo '<pre>';
-//        print_r($response->getBody());
-//        echo '</pre>';
-//        exit;
-
-
-        if ($response->getStatusCode() != 200) {
-            $body = json_decode($response->getBody());
-
-            throw new \RuntimeException(
-                sprintf(
-                    "An error occurred while sending request. Status code: %d; Url: %s; Message: %s; Errors: %s",
-                    $body->status,
-                    $requestUrl,
-                    $body->message,
-                    @json_encode($body->errors)
-                )
-            );
-        }
+        // Zalando returns a 400 error when nothing is found, let's just forward their errors instead of throwing exceptions
+//        if ($response->getStatusCode() != 200) {
+//            $body = json_decode($response->getBody());
+//
+//            throw new \RuntimeException(
+//                sprintf(
+//                    "An error occurred while sending request. Status code: %d; Url: %s; Message: %s; Errors: %s",
+//                    $body->status,
+//                    $requestUrl,
+//                    $body->message,
+//                    @json_encode($body->errors)
+//                )
+//            );
+//        }
 
         return $response->getBody();
     }
