@@ -137,29 +137,4 @@ class Articles extends AbstractOperation
 
     }
 
-
-    /**
-     * Magic setter and getter functions so we can dynamically set filters
-     * @see https://github.com/zalando/shop-api-documentation/wiki/Filter
-     *
-     * @param string $methodName Methodname
-     * @param string $value      Value
-     *
-     * @return \ZalandoPHP\Operations\Articles
-     */
-    public function __call($methodName, $value)
-    {
-        if (substr($methodName, 0, 3) == 'set') {
-            $this->filter[lcfirst(substr($methodName, 3))] = array_shift($value);
-            return $this;
-        }
-        if (substr($methodName, 0, 3) == 'get') {
-            $keyName = lcfirst(substr($methodName, 3));
-            return isset($this->filter[$keyName]) ? $this->filter[$keyName] : null;
-        }
-
-        return $this;
-    }
-
-
 }
