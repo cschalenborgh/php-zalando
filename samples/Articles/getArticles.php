@@ -39,7 +39,8 @@ $zalandoPHP = new ZalandoPHP($conf);
 
 
 $articles = new Articles();
-//$articles->setColor('red');
+$articles->setColor('red,green');
+$articles->setBrand('BE1,ME1');
 $articles->setPage(3);
 $articles->setPageSize(5);
 

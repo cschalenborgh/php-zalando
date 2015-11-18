@@ -57,15 +57,15 @@ abstract class AbstractOperation implements OperationInterface
      */
     public function __call($methodName, $filter)
     {
+        $keyName = lcfirst(substr($methodName, 3));
+
         if (substr($methodName, 0, 3) == 'set') {
-            $this->filter[lcfirst(substr($methodName, 3))] = array_shift($filter);
+            $this->filter[$keyName] = array_shift($filter);
 
             return $this;
         }
 
         if (substr($methodName, 0, 3) == 'get') {
-            $keyName = lcfirst(substr($methodName, 3));
-
             return isset($this->filter[$keyName]) ? $this->filter[$keyName] : null;
         }
 

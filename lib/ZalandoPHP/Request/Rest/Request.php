@@ -216,6 +216,7 @@ class Request implements RequestInterface
         $options[CURLINFO_HEADER_OUT]   = true;
         $options[CURLOPT_HTTPHEADER]    = $headers;
         $options[CURLOPT_URL]           = $this->requestScheme . $operation->getEndpoint() . (!Empty($queryString) ? '?' .$queryString : '');
+
         //$options[CURLOPT_URL]           = 'http://zalando.dev:80/Samples/debug_headers.php';
 
         // show curl debug?
@@ -316,8 +317,8 @@ class Request implements RequestInterface
     {
         $parameterList = [];
         foreach ($params as $key => $value) {
+            // is bool?
             if(is_bool($value)) {
-
                 // replace boolean with 'string' value
                 if($value === true) {
                     $value = 'true';
@@ -327,7 +328,17 @@ class Request implements RequestInterface
                 }
             }
 
-            $parameterList[] = sprintf('%s=%s', $key, rawurlencode($value));
+            // has multiple values?
+            if(strpos($value, ',')) {
+                $multiples = explode(',', $value);
+
+                foreach($multiples as $multiple) {
+                    $parameterList[] = sprintf('%s=%s', $key, rawurlencode($multiple));
+                }
+            }
+            else {
+                $parameterList[] = sprintf('%s=%s', $key, rawurlencode($value));
+            }
         }
 
         //$parameterList[] = 'Signature=' . rawurlencode($this->buildSignature($parameterList));

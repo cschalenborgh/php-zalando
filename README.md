@@ -61,4 +61,12 @@ http://zalando.github.io/shop-api-demo/
 - https://api.zalando.com/filters/{name}
 - https://api.zalando.com/recommendations/{articleIds}
 
+## Multiple filter values
+
+Since Zalando uses multiple filter values like this:
+https://api.zalando.com/articles?brandFamily=nike&color=white&color=red&page=1&pageSize=2
+
+We've chosen to accept comma seperated values for the filter setting. For example:
+$articles->setColor('white,red');
+
 Feel free to contribute.
