@@ -28,7 +28,7 @@ $conf = new GenericConfiguration();
 
 try {
     $conf
-        ->setLocale('nl-NL')
+        ->setLocale('nl-BE')
         ->setClientName('zalando-php-wrapper')
         ->setResponseType('array');
 
@@ -39,10 +39,11 @@ $zalandoPHP = new ZalandoPHP($conf);
 
 
 $articles = new Articles();
-$articles->setColor('red,green');
-$articles->setBrand('BE1,ME1');
-$articles->setPage(3);
-$articles->setPageSize(5);
+//$articles->setColor('red,green');
+//$articles->setBrand('BE1,ME1');
+//$articles->setPage(3);
+//$articles->setPageSize(5);
+$articles->setCategory('baby-accessoires,baby-accessoires-promo,babys-schoenen,babys-schoenen-promo,babyslaapzak,babyslaapzak-promo,babyslofjes,babyslofjes-promo,kinderkleding-baby-ondergoed-rompers,kinderkleding-baby-ondergoed-rompers-promo,luxe-baby-accessoires');
 
 $formattedResponse = $zalandoPHP->runOperation($articles);
 
