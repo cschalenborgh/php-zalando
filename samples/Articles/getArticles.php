@@ -30,7 +30,9 @@ try {
     $conf
         ->setLocale('nl-BE')
         ->setClientName('zalando-php-wrapper')
-        ->setResponseType('array');
+        ->setResponseType('array')
+        ->setTimeout(12)
+        ->setConnectionTimeout(45);
 
 } catch (\Exception $e) {
     echo $e->getMessage();

@@ -41,6 +41,8 @@ class RequestFactoryTest extends \PHPUnit_Framework_TestCase
                 'getRequestFactory',
                 'getLocale',
                 'getClientName',
+                'getTimeout',
+                'getConnectionTimeout',
             )
         );
         $configuration->expects($this->once())

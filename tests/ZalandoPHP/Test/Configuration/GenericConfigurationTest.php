@@ -66,6 +66,22 @@ class GenericConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('nl-be', $object->getLocale());
     }
+
+    public function testTimeoutSetter()
+    {
+        $object = new GenericConfiguration();
+        $object->setTimeout(123);
+
+        $this->assertEquals(123, $object->getTimeout());
+    }
+
+    public function testConnectionTimeoutSetter()
+    {
+        $object = new GenericConfiguration();
+        $object->setConnectionTimeout(456);
+
+        $this->assertEquals(456, $object->getConnectionTimeout());
+    }
 }
 
 class CallableClass

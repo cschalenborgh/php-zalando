@@ -34,6 +34,20 @@ interface ConfigurationInterface
     public function getLocale();
 
     /**
+     * Gets the timeout
+     *
+     * @return int
+     */
+    public function getTimeout();
+
+    /**
+     * Gets the connection timeout
+     *
+     * @return int
+     */
+    public function getConnectionTimeout();
+
+    /**
      * Gets the requestclass
      *
      * @return string

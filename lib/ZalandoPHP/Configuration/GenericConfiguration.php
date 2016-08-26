@@ -85,6 +85,20 @@ class GenericConfiguration implements ConfigurationInterface
     protected $responseTransformerFactory = null;
 
     /**
+     * The timeout
+     *
+     * @var int
+     */
+    protected $timeout = null;
+
+    /**
+     * The connection timeout
+     *
+     * @var int
+     */
+    protected $connection_timeout = null;
+
+    /**
      * {@inheritdoc}
      */
     public function getLocale()
@@ -196,6 +210,50 @@ class GenericConfiguration implements ConfigurationInterface
         }
 
         $this->requestFactory = $callback;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTimeout()
+    {
+        return $this->timeout;
+    }
+
+    /**
+     * Sets the timeout
+     *
+     * @param string $timeout
+     *
+     * @return \ZalandoPHP\Configuration\GenericConfiguration
+     */
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConnectionTimeout()
+    {
+        return $this->connection_timeout;
+    }
+
+    /**
+     * Sets the connection_timeout
+     *
+     * @param string $connection_timeout
+     *
+     * @return \ZalandoPHP\Configuration\GenericConfiguration
+     */
+    public function setConnectionTimeout($connection_timeout)
+    {
+        $this->connection_timeout = $connection_timeout;
 
         return $this;
     }

@@ -159,10 +159,12 @@ class Request implements RequestInterface
 //        die($requestUrl);
 
         $params = [
-            'headers'       => $headers,
-            'debug'         => ZalandoPHP::DEBUG,
-            //'exceptions'    => true
-            'exceptions'    => false
+            'headers'               => $headers,
+            'debug'                 => ZalandoPHP::DEBUG,
+            //'exceptions'          => true
+            'exceptions'            => false,
+            'timeout'               => !is_null($this->configuration->getTimeout()) ? $this->configuration->getTimeout() : $this->options[self::TIMEOUT],
+            'connect_timeout'       => !is_null($this->configuration->getConnectionTimeout()) ? $this->configuration->getConnectionTimeout() : $this->options[self::CONNECTION_TIMEOUT]
         ];
 
         // init Guzzle client
@@ -201,7 +203,6 @@ class Request implements RequestInterface
      */
     public function performCurl(OperationInterface $operation)
     {
-
         $ch = curl_init();
 
         if (false === $ch) {
@@ -217,7 +218,13 @@ class Request implements RequestInterface
         $options[CURLOPT_HTTPHEADER]    = $headers;
         $options[CURLOPT_URL]           = $this->requestScheme . $operation->getEndpoint() . (!Empty($queryString) ? '?' .$queryString : '');
 
-        //$options[CURLOPT_URL]           = 'http://zalando.dev:80/Samples/debug_headers.php';
+        // overwrite default options here
+        if (!is_null($this->configuration->getTimeout())) {
+            $options[self::TIMEOUT]             = $this->configuration->getTimeout();
+        }
+        if (!is_null($this->configuration->getConnectionTimeout())) {
+            $options[self::CONNECTION_TIMEOUT]  = $this->configuration->getConnectionTimeout();
+        }
 
         // show curl debug?
         if(ZalandoPHP::DEBUG) {
