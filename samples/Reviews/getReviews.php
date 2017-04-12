@@ -40,10 +40,7 @@ $zalandoPHP = new ZalandoPHP($conf);
 
 
 // return one
-//$reviews = new Reviews('4385857-AN651H06H-Q11');
-
-// return all
-$reviews = new Reviews();
+$reviews = new Reviews('4385857-AN651H06H-Q11');
 $formattedResponse = $zalandoPHP->runOperation($reviews);
 
 echo '<pre>';

@@ -30,6 +30,10 @@ class Reviews extends AbstractOperation
 
     public function __construct($reviewId = '')
     {
+        if (strlen($reviewId) == 0) {
+            throw new \InvalidArgumentException('reviewId is empty.');
+        }
+
         $this->endpoint = str_replace('{reviewId}', $reviewId, $this->endpoint);
     }
 

@@ -24,10 +24,20 @@ class ArticlesReviewsTest extends \PHPUnit_Framework_TestCase
 
     public function testValidPage()
     {
-        $reviews = new ArticlesReviews();
+        $reviews = new ArticlesReviews(123);
         $reviews->setPage(1);
 
         $this->assertEquals(1, $reviews->getPage());
     }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testInvalidArticleId()
+    {
+        $operation = new ArticlesReviews();
+        $zalando = new ZalandoPHP();
+
+        $zalando->runOperation($operation);
+    }
 }

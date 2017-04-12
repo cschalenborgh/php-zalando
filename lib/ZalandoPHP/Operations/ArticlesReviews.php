@@ -26,10 +26,14 @@ namespace ZalandoPHP\Operations;
 class ArticlesReviews extends AbstractOperation
 {
 
-    protected $endpoint         = 'article-reviews?articleId={articleId}';
+    protected $endpoint         = 'articles/{articleId}/reviews';
 
     public function __construct($articleId = '')
     {
+        if (strlen($articleId) == 0) {
+            throw new \InvalidArgumentException('articleId is empty.');
+        }
+
         $this->endpoint = str_replace('{articleId}', $articleId, $this->endpoint);
     }
 
